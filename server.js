@@ -137,36 +137,7 @@ app.listen(port, () => {
 });
 
 
-//update status
-app.get('/update-status', (req, res) => {
-  const id = parseInt(req.query.id);
-  const to = req.query.to;
 
-  const allowed = ['pending', 'in_progress', 'completed'];
-  if (!allowed.includes(to)) {
-    return res.status(400).send("Invalid status.");
-  }
-
-  const sql = `UPDATE repairs SET status = ? WHERE id = ?`;
-  db.execute(sql, [to, id], (err, result) => {
-    if (err) {
-      console.error('❌ Error updating status:', err);
-      return res.status(500).send("Failed to update status.");
-    }
-
-    res.redirect('/home.html'); // กลับไปหน้าแรก
-  });
-});
-
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(express.static('public')); // ถ้ามีไฟล์ HTML ใน public/
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
 
 
