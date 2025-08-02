@@ -81,7 +81,61 @@ app.listen(PORT, () => {
   console.log(`🚀 Server ready: http://localhost:${PORT}`);
 });
 
-include 'db_connect.php';
+
+//บันทึกใบแจ้งซ่อม
+const express = require('express');
+const mysql = require('mysql2');
+const bodyParser = require('body-parser');
+const path = require('path');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static('public')); // ไฟล์ static เช่น home.html ต้องอยู่ในโฟลเดอร์ public
+
+// เชื่อมต่อฐานข้อมูล
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'repair_db'
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('❌ Database connection failed:', err);
+    return;
+  }
+  console.log('✅ Connected to MySQL');
+});
+
+// Route สำหรับรับข้อมูลฟอร์มและบันทึกลงฐานข้อมูล
+app.post('/save-report', (req, res) => {
+  const { machine, location, problem, reporter } = req.body;
+
+  const sql = `INSERT INTO repairs (machine_name, location, problem, reporter)
+               VALUES (?, ?, ?, ?)`;
+  connection.execute(sql, [machine, location, problem, reporter], (err, results) => {
+    if (err) {
+      console.error('❌ Failed to insert data:', err);
+      res.status(500).send('Error saving report');
+      return;
+    }
+
+    // ✅ Redirect กลับไปหน้า home.html
+    res.redirect('/home.html');
+  });
+});
+
+// เริ่มเซิร์ฟเวอร์
+app.listen(port, () => {
+  console.log(`🚀 Server running at http://localhost:${port}`);
+});
+
+
 
 
 
