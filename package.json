@@ -2,9 +2,9 @@
   "name": "sat.mt-online",
   "version": "1.0.0",
   "description": "SAT Maintenance Online System",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
     "build": "echo \"No build step necessary\""
   },
   "dependencies": {
@@ -12,5 +12,6 @@
     "mysql": "^2.18.1"
   }
 }
+
 
 
