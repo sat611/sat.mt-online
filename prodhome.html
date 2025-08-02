@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Top Banner + Sidebar + Popup</title>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    .top-banner {
+      width: 100%;
+    }
+
+    .top-banner img {
+      width: 100%;
+      display: block;
+    }
+
+    .top-text {
+      background-color: #3498db;
+      color: white;
+      padding: 15px;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* Layout */
+    .main {
+      display: flex;
+      padding: 0;
+      margin: 0;
+      
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #3a4b7e;
+      color: white;
+      padding: 5px;
+    }
+
+    .sidebar button {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 0px;
+      background-color: rgba(19, 227, 179, 0.942);
+      color: rgb(25, 25, 25);
+      cursor: pointer;
+    }
+
+
+
+
+
+
+   .sidebar ul {
+      list-style: none;
+      padding: 0;
+      cursor: pointer;
+      font-size: large;
+    }
+
+    .sidebar ui {
+      margin-bottom: 15px;
+      cursor: pointer;
+
+
+    }
+ 
+      
+
+     button {
+      background-color: rgba(192, 136, 14, 0.942);
+      border-radius: 15px;
+      margin-left: 0%;
+      font-size: medium;
+      font-style: normal;
+      text-align: center;
+      width: 100px;
+      height: 45px;
+
+     }
+
+
+    /* Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 50px;
+      width: 1000px;
+      border-radius: 10px;
+      margin-bottom: 100px;
+     
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      width: 150px;
+      margin-right: 10px;
+      text-align: right;
+    }
+
+    .form-group input {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .form-group select {
+      flex: 1;
+      padding: 10px;
+      box-sizing: border-box;
+    
+
+
+    }
+
+
+
+
+    .close-btn {
+      background-color: #e33e3e;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      border-radius: 15px;
+      width: 100px;
+
+    }
+
+     button:hover {
+      background-color: #2980b9;
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- ส่วนบน: รูปภาพ + ข้อความ -->
+  <div class="top-banner">
+    <img src="https://via.placeholder.com/1200x200.png?text=ภาพหัวเรื่อง" alt="Banner">
+    <div class="top-text">แจ้งซ่อมเครื่องจักร - กรุณาเลือกเมนูด้านซ้ายเพื่อดำเนินการ</div>
+  </div>
+
+
+
+
+
+  <!-- ส่วนหลัก: Sidebar + เนื้อหาหลัก -->
+  <div class="main">
+    <div class="sidebar">
+      <h2>📖เมนู</h2>
+      <button onclick="openform(YPMT1)">➕ 📋YPMT 1</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <button onclick="openPopup()">➕ 📋YPMT 2</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <button onclick="openPopup()">➕ 📋YPMT 3</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <button onclick="openPopup()">➕ 📋YPMT 5</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <button onclick="openPopup()">➕ 📋UTILITY</button>
+    </div>
+  </div>
+
+  <div class="main">
+   <div class="sidebar">
+    <ul>
+    <li onclick="location.href='home.html'">🏠 กลับ</li>
+    </ul>
+  </div>
+  </div>
+ 
+
+
+
+  <!-- Popup Modal -->
+  <div class="modal" id="popupModal">
+    <div class="modal-content">
+      <h3>ฟอร์มแจ้งซ่อม</h3>
+      <p>คุณสามารถกรอกข้อมูลเกี่ยวกับเครื่องจักรที่ต้องการซ่อมได้ที่นี่</p>
+      <!-- เพิ่ม input ได้ตามต้องการ -->
+      <button class="close-btn" onclick="closePopup()">ปิด</button>
+   
+      <!-- โครงสร้างหลัก -->
+  <div class="container">
+    
+    <!--ฟอร์มด้านขวา  form id repairForm เขียนให้บันทึกในPhp-->
+    <form id="repairForm" action ="save_data.php"  method="POST">
+    <div class="form-row"> 
+    <div class="form-section">
+    <div class="form-group">
+    <label for="date">วันที่แจ้งซ่อม:</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="time">เวลาที่เครื่องจักรเสีย</label>
+    <input type="time" id="time" name="time"><br>
+
+    </div>
+    
+    <div class="form-group">
+    <label for="Line">ชื่อไลน์การผลิต</label>
+    <input type="text" id="line" name="line">
+
+
+    <label for="section">Section:</label>
+    <select id="text" name="section" required>
+      <option value="">-</option>
+      <option value="Mold">Mold</option>
+      <option value="Core Making">Core</option>
+      <option value="FC2">FC2</option>
+      <option value="FC Deburing">Deburing</option>
+      <option value="LP Casting">LP Casting</option>
+      <option value="Body">Body</option>
+    </select><br>
+    </div>
+
+    <div class="form-group">
+    <label for="Machine_name">ชื่อเครื่องจักร</label>
+    <input type="text" id="Machine_name" name="Machine_name">
+    
+    <label for="Machine_Code">รหัสเครื่องจักร</label>
+    <input type="text" id="Machine_Code" name="Machine_Code"><br>
+    </div>
+
+
+
+    <button type="submit">ส่งซ่อม</button><br>
+  </form>
+</div>
+</div>
+
+
+
+
+
+    <!--popup ถามก่อนส่งซ่อม-->
+      <script>
+        function confirsubmit() {
+          const confirmed = confirm("คุณแน่ใจว่าจะส่งซ่อม");
+          if (!confirmed) return; //ถ้าไม่แน่ใจจะหยุด
+
+          //ดึงค่าจากฟอร์ม
+          const form = document.getElementById("myform")
+          const date = form.date.value;
+          const section = form.section.value;
+
+          //เตรียมข้อมูล Json
+          const data ={
+            date: date,
+            section: seaction
+          };
+
+          //แปลงเป็นJson string
+          const jsonData = JSON.stringify(data,null,2); // มีแค่ 2 ข้อมูล ถ้ามีอีกก็ต้องมาเพิ่ม
+
+          //สร้างblob และ trigger ดาวน์โหลด
+          const blob = new blob([jsonData],{type: "application/json"});
+          const url = URL.createObjectURL(blob);
+          const a= document.createComment("a");
+            a.href = url;
+            a.download = "data.json";
+            a.click();
+            URL.revokeObjectURL(url);//ล้างURL หลังใช้งาน
+        }
+      
+
+
+    document.getElementById("repairForm").addEventListener("submit", function(event) {
+  if (!confirm("คุณแน่ใจหรือไม่ว่าจะส่ง?")) {
+    event.preventDefault(); // ถ้าไม่ยืนยันให้ยกเลิกการส่ง
+  }
+});
+  
+
+
+
+  
+    function openPopup() {
+      document.getElementById('popupModal').style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('popupModal').style.display = 'none';
+    }
+  </script>
+</div><!--wrapper-->
+</body>
+</html>
