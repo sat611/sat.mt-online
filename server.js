@@ -15,12 +15,13 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// เชื่อมต่อฐานข้อมูล
+/ เชื่อมต่อ MySQL (ใช้ของ AwardSpace)
 const db = mysql.createConnection({
-  host: 'localhost',           // หรือ process.env.DB_HOST
-  user: 'root',                // หรือ process.env.DB_USER
-  password: '',                // หรือ process.env.DB_PASSWORD
-  database: 'repair_db'        // หรือ process.env.DB_NAME
+  host: 'fdb1034.awardspace.net',
+  user: '4666545_datareport',
+  password: 'specialactivityteam4434',  // 🔒 ต้องใส่รหัสผ่านจริงของคุณ
+  database: '4666545_datareport',
+  port: 3306
 });
 
 db.connect(err => {
