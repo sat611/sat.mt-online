@@ -158,6 +158,15 @@ app.get('/update-status', (req, res) => {
   });
 });
 
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.static('public')); // ถ้ามีไฟล์ HTML ใน public/
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 
 
