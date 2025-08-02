@@ -1,3 +1,4 @@
+app.use(express.static('public'));
 // server.js //save_data
 const express = require('express');
 const mysql = require('mysql2');
