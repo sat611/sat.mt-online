@@ -9,7 +9,7 @@ document.getElementById("repairForm").addEventListener("submit", function(event)
 
     const formData = new FormData(this);
 
-    fetch("repair.php", {
+    fetch("repair.js", {
       method: "POST",
       body: formData
     })
