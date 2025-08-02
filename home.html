@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>HOME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div class="wrapper">
+
+  <!-- 🌐 Sidebar เมนู -->
+  <aside class="sidebar">
+    <h2>📖เมนู</h2>
+    <ul>
+      <ul>
+  <li onclick="location.href='prodhome.html'">📋 แจ้งซ่อมออนไลน์</li>
+  <li onclick="location.href='history.html'">📚 ประวัติการซ่อมย้อนหลัง</li>
+  <li onclick="location.href='graph.html'">📊 กราฟ</li>
+  <li onclick="location.href='monitor.html'">🖥️ Monitoring</li>
+  <li onclick="location.href='xxxxx.html'">⚠️ Code Alarm</li>
+  <li onclick="location.href='part.html'">🛒 Spare Part</li>
+  <li onclick="location.href='login.html'">➡️ Log-out</li>
+</ul>
+  </aside>
+
+  <!-- 🏠 Home Main Content -->
+  <main class="main-content">
+    <h1>ระบบแจ้งเหตุออนไลน์</h1>
+    <div class="status-container">
+      <!-- 🔁 รวมปุ่มและตารางไว้ในบล็อกเดียว -->
+<div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+
+  <!-- ปุ่มแจ้งเหตุ -->
+  <div style="display: flex; justify-content: center; gap: 10px;">
+    <button  id=""btn-report   ondblclick="window.location.href='report.html'" style="background-color: rgba(204, 206, 184, 0.622); color: rgb(21, 21, 21); padding: 15px 30px; border: none; border-radius: 10px; font-size: 18px;">
+      🔴 แจ้งเหตุ
+    </button>
+
+
+
+    <button ondblclick="window.location.href='progress.html'" style="background-color: #edede0; padding: 15px 30px; border: none; border-radius: 10px; font-size: 18px;">
+      🟡 กำลังดำเนินการซ่อม
+    </button>
+
+    <button ondblclick="window.location.href='completed.html'" style="background-color: #0a0; color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 18px;">
+      ✅ ซ่อมเสร็จสิ้น
+    </button>
+
+  </div>
+
+
+
+
+
+
+  <!-- 🧾 ตารางข้อมูล -->
+  <div style="width: 100%; max-width: 900px; background-color: #f7f7f7; padding: 20px; border-radius: 10px;">
+    <h3>📋 ข้อมูลการแจ้งซ่อมล่าสุด</h3>
+    <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+      <thead style="background-color: #ddd;">
+        
+
+
+
+
+
+
+
+
+
+
+        
+      
+        <!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>รายการแจ้งซ่อม</title>
+
+  
+
+
+        
+        
+        <tr>
+          <th>ลำดับ</th>
+          <th>ชื่อเครื่องจักร</th>
+          <th>สถานที่</th>
+          <th>รายละเอียดปัญหา</th>
+          <th>ผู้แจ้ง</th>
+          <th>วันที่</th>
+          <th>สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>เครื่องปั๊มลม A1</td>
+          <td>โรงงาน 1</td>
+          <td>ไม่สามารถสตาร์ทเครื่องได้</td>
+          <td>สมชาย</td>
+          <td>30/07/2025</td>
+          <td style="color: red;">รอดำเนินการ</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>สายพานลำเลียง B2</td>
+          <td>โรงงาน 2</td>
+          <td>เสียงดังผิดปกติ</td>
+          <td>กาญจนา</td>
+          <td>29/07/2025</td>
+          <td style="color: orange;">กำลังดำเนินการ</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>มอเตอร์ C3</td>
+          <td>โรงงาน 3</td>
+          <td>มีกลิ่นไหม้</td>
+          <td>ณัฐวุฒิ</td>
+          <td>28/07/2025</td>
+          <td style="color: green;">ซ่อมเสร็จสิ้น</td>
+        </tr>
+        <button onclick="window.location.href='update_status.php?id=1&to=in_progress'">📥 กดรับใบแจ้งซ่อม</button>
+
+      </tbody>
+    </table>
+  </div>
+</div>    
+
+
+<form id="repairForm" action="save_data.php" method="POST"> <!--เตรียมรับข้อมูลจากProdhome.html-->
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script src="script.js"></script>
+
+
+<script>
+  async function checkStatus() {
+    const response = await fetch('get_status.php'); // PHP ที่ query DB
+    const data = await response.json();
+
+    // ถ้ามีแจ้งซ่อม
+    if (data.pending > 0) {
+      document.getElementById('btn-report').classList.add('blink-red');
+    }
+    if (data.in_progress > 0) {
+      document.getElementById('btn-progress').classList.add('blink-yellow');
+    }
+    if (data.completed > 0) {
+      document.getElementById('btn-completed').style.backgroundColor = '#0a0';
+    }
+  }
+
+  setInterval(checkStatus, 3000); // เช็คทุก 3 วินาที
+  checkStatus();
+</script>
+
+<script>
+async function checkStatus() {
+  const res = await fetch('get_status.php');
+  const data = await res.json();
+
+  const btnReport = document.getElementById('btn-report');
+  const btnProgress = document.getElementById('btn-progress');
+  const btnCompleted = document.getElementById('btn-completed');
+
+  // ล้าง class ก่อน
+  btnReport.classList.remove('blink-red');
+  btnProgress.classList.remove('blink-yellow');
+
+  if (data.pending > 0) {
+    btnReport.classList.add('blink-red');
+  }
+  if (data.in_progress > 0) {
+    btnProgress.classList.add('blink-yellow');
+  }
+}
+
+setInterval(checkStatus, 3000);
+checkStatus();
+</script>
+
+
+
+
+
+
+</body>
+</html>
