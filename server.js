@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-/ เชื่อมต่อ MySQL (ใช้ของ AwardSpace)
+// เชื่อมต่อ MySQL (ใช้ของ AwardSpace)
 const db = mysql.createConnection({
   host: 'fdb1034.awardspace.net',
   user: '4666545_datareport',
