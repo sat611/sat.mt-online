@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mysql = require('mysql'); // เปลี่ยนจาก 'pg' เป็น 'mysql'
+const mysql = require('mysql2'); // เปลี่ยนจาก 'pg' เป็น 'mysql'
 require('dotenv').config();
 
 const app = express();
