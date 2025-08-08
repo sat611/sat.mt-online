@@ -9,7 +9,7 @@ document.getElementById("repairForm").addEventListener("submit", function(event)
 
     const formData = new FormData(this);
 
-    fetch("repair.php", {
+    fetch("/save-report", {
       method: "POST",
       body: formData
     })
@@ -26,6 +26,13 @@ document.getElementById("repairForm").addEventListener("submit", function(event)
       console.error("Error:", error);
       alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์");
     });
+
+/*updata status*/
+fetch('/update-status?id=3&to=completed')
+  .then(() => window.location.href = '/home.html');
+
+
+    
 
   } else {
     alert("ยกเลิกการส่งข้อมูล");
