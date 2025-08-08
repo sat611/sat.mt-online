@@ -1,88 +1,53 @@
-// server.js //save_data
 const express = require('express');
-const mysql = require('mysql2');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const mysql = require('mysql2'); // เปลี่ยนจาก 'pg' เป็น 'mysql'
+require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 10000;
+
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-// 🔌 MySQL Connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'repair_db'
+// สร้าง connection กับ MySQL
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,     // = mysql.railway.internal
+  user: process.env.DB_USER,     // = root
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT      // = 3306
 });
 
-// 🔧 ดึงข้อมูลรายการแจ้งซ่อม
-app.get('/repairs', (req, res) => {
-  db.query('SELECT * FROM repairs', (err, results) => {
+// เชื่อมต่อฐานข้อมูล
+connection.connect((err) => {
+  if (err) {
+    console.error('❌ Failed to connect to MySQL:', err);
+  } else {
+    console.log('✅ Connected to MySQL');
+  }
+});
+
+// route ตัวอย่าง
+app.post('/api/repair', (req, res) => {
+  const { machine_name, location, problem, reporter } = req.body;
+
+  const sql = 'INSERT INTO repairs (machine_name, location, problem, reporter) VALUES (?, ?, ?, ?)';
+  const values = [machine_name, location, problem, reporter];
+
+  connection.query(sql, values, (err, result) => {
     if (err) {
-      console.error(err);
-      return res.status(500).send('Database error');
-    }
-    res.json(results);
-  });
-});
-
-
-
-
-
-//home
-
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
-const app = express();
-
-app.use(cors());
-app.use(express.static('public')); // สำหรับเสิร์ฟไฟล์ HTML ถ้ามี
-
-// ✅ เชื่อมต่อฐานข้อมูล
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'repair_db'
-});
-
-// 🔧 API แสดงรายการแจ้งซ่อมทั้งหมด
-app.get('/repairs', (req, res) => {
-  const sql = 'SELECT * FROM repairs ORDER BY id DESC';
-
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error('❌ เกิดข้อผิดพลาดในการเชื่อมต่อ:', err);
-      return res.status(500).send('Database error');
-    }
-
-    // 🔄 แปลงเป็น HTML (ถ้าต้องการแบบ PHP เดิม)
-    if (results.length > 0) {
-      const html = results.map(row => `
-        📆 วันที่: ${row.date}
-        | 🕐 เวลา: ${row.time}
-        | 🏭 ไลน์: ${row.line}
-        | 🧩 แผนก: ${row.section}
-        | 🔧 เครื่องจักร: ${row.Machine_name}
-        | รหัส: ${row.Machine_Code}<br><hr>
-      `).join('');
-      res.send(`<h2>📋 รายการแจ้งซ่อมทั้งหมด</h2>${html}`);
+      console.error('❌ Error inserting data:', err);
+      res.status(500).json({ error: 'Database error' });
     } else {
-      res.send('ยังไม่มีรายการแจ้งซ่อม');
+      res.status(200).json({ message: 'Success' });
     }
   });
 });
 
-// ✅ เริ่มเซิร์ฟเวอร์
-const PORT = process.env.PORT || 3000;
+// start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server ready: http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-
-include 'db_connect.php';
-
-
-
-?>
