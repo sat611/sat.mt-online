@@ -4,3 +4,4 @@ DB_PASSWORD=uAQhCHHNyFWaexJxmchTRAaTqCtsyozo
 DB_NAME=users
 DB_PORT=42118
 PORT=10000
+JWT_SECRET=supersecretkey
