@@ -5,7 +5,7 @@
   "description": "SAT Maintenance Online System",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node sat.report-online/src/server.js"
     "build": "echo \"No build step necessary\""
   },
   "dependencies": {
